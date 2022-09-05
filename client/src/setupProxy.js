@@ -55,7 +55,7 @@ module.exports = function (app) {
         }
       },
       pathRewrite,
-      router: req => `https://${req.headers["x-adt-host"]}/`
+      router: req => `http://${req.headers["x-adt-host"]}:${req.headers["x-adt-port"]}/`
     })
   );
 };

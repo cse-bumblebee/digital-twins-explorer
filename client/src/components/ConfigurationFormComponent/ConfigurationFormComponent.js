@@ -101,13 +101,14 @@ export class ConfigurationFormComponent extends Component {
       return false;
     }
 
-    if (!config.appAdtUrl.startsWith("https")) {
+    if (!config.appAdtUrl.startsWith("http")) {
       eventService.publishError({
-        customMessage: "Azure Digital Twins URL must start with ‘https’."
+        customMessage: "Azure Digital Twins URL must start with ‘http’."
       });
       return false;
     }
 
+    /* Remove
     const regexp = /^(https):\/\/[\w-]+.api.[\w-.]+.[\w-.]+digitaltwins[\w-.]+/gm;
     if (!regexp.test(config.appAdtUrl)) {
       eventService.publishError({
@@ -115,6 +116,7 @@ export class ConfigurationFormComponent extends Component {
       });
       return false;
     }
+    */
 
     return true;
   };

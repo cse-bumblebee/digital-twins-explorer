@@ -53,6 +53,7 @@ class CustomHttpClient {
     const url = new URL(httpRequest.url);
     url.searchParams.set("api-version", API_VERSION);
     httpRequest.headers.set("x-adt-host", url.hostname);
+    httpRequest.headers.set("x-adt-port", url.port);
 
     const baseUrl = new URL(window.location.origin);
     url.host = baseUrl.host;

@@ -12,12 +12,14 @@ namespace AdtExplorer.Functions.Utilities
 {
   public class RequestContext
   {
-    public RequestContext(string host)
+    public RequestContext(string host, string port)
     {
       Host = host;
+      Port = int.TryParse(port, out var p) ? p : 443;
     }
 
     public string Host { get; private set; }
+    public int Port {get; private set; }
     public string InstanceName => (Host ?? string.Empty).Split(".", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
   }
 
@@ -76,6 +78,22 @@ namespace AdtExplorer.Functions.Utilities
       }
 
       if (req.Query.TryGetValue(Constants.AdtHostHeaderName, out value))
+      {
+        return true;
+      }
+
+      value = default(StringValues);
+      return false;
+    }
+
+    private bool TryGetAdtPortHeader(HttpRequest req, out StringValues value)
+    {
+      if (req.Headers.TryGetValue(Constants.AdtPortHeaderName, out value))
+      {
+        return true;
+      }
+
+      if (req.Query.TryGetValue(Constants.AdtPortHeaderName, out value))
       {
         return true;
       }

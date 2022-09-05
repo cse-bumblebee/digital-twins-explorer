@@ -38,14 +38,15 @@ namespace AdtExplorer.Functions
         return HttpUtilities.BadRequest(rpr.Message);
       }
 
-      if (token.ExpiresOn < DateTime.UtcNow)
-      {
-        token = await GetAccessToken();
-      }
+      // if (token.ExpiresOn < DateTime.UtcNow)
+      // {
+      //   token = await GetAccessToken();
+      // }
 
-      req.Headers["authorization"] = $"Bearer {token.Token}";
+      // req.Headers["authorization"] = $"Bearer {token.Token}";
 
-      var ctx = req.HttpContext.ForwardTo(new UpstreamHost("https", new HostString(rpr.Context.Host)));
+      //var ctx = req.HttpContext.ForwardTo(new UpstreamHost("https", new HostString(rpr.Context.Host)));
+      var ctx = req.HttpContext.ForwardTo(new UpstreamHost("http", new HostString(rpr.Context.Host, rpr.Context.Port)));
       var uri = new UriBuilder(ctx.UpstreamRequest.RequestUri);
       uri.Path = uri.Path.Replace("api/proxy/", string.Empty);
       ctx.UpstreamRequest.RequestUri = uri.Uri;
